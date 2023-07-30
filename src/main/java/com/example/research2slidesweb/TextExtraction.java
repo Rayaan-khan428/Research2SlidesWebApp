@@ -73,7 +73,7 @@ public class TextExtraction extends PDFStreamEngine {
     }
 
     /**
-     * Extracts text from a given PDDocument and writes it to a text file.
+     * Extracts text from a given PDDocument and writes it to a json file.
      *
      * @param document The PDDocument from which text needs to be extracted.
      * @throws IOException If an I/O error occurs while reading the document or writing the output.

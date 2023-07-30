@@ -4,8 +4,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.asynchttpclient.*;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Base64;
+import org.json.JSONObject;
 import java.util.concurrent.ExecutionException;
 
 public class TextSummarizer {
@@ -22,16 +32,18 @@ public class TextSummarizer {
      * @param presentation
      * @throws InterruptedException
      */
-    public static void summarize(ArrayList<Slide> presentation) throws InterruptedException {
+    public static void summarize(ArrayList<Slide> presentation) throws InterruptedException, IOException, URISyntaxException {
         Gson gson = new Gson();
 
         for (int i = 0; i < presentation.size(); i++) {
 
             Slide slide = presentation.get(i);
             String text = slide.getParagraph();
+            String title = generateTitle(text);
             String summary = summarizeText(text);
 
             if (summary != null) {
+                slide.setTitle(title);
                 slide.setParagraph(summary);
                 double percentage = ((double) i / presentation.size()) * 100;
                 percentage = Double.parseDouble(DECIMAL_FORMAT.format(percentage));
@@ -89,7 +101,7 @@ public class TextSummarizer {
         System.out.println("_________________________________________________");
         System.out.println("Summarized Text");
         System.out.println("Summary: " + summary);
-        System.out.println("Percentage of PDF summarized: " + percentage + "%");
+        System.out.println("\nPercentage of PDF summarized: " + percentage + "%");
         System.out.println(currentIndex + " paragraphs out of " + totalSlides + "\n");
     }
 }
