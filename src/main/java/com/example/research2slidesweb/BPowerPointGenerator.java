@@ -100,6 +100,13 @@ public class BPowerPointGenerator {
         File file = new File(presentation.get(0).getTitle() + ".pptx");
         FileOutputStream out = new FileOutputStream(parentDirectory + "/" + file);
 
+        //----------------------NEW GUI CHANGES----------------------
+        String directoryGUI = SaveDestinationGUI.getDestination();
+        if(directoryGUI != null) {
+            out = new FileOutputStream(directoryGUI + "/" + file);
+        }
+        //---
+
         // saving the changes to a file
         ppt.write(out);
         System.out.println("Presentation created successfully");
