@@ -242,7 +242,7 @@ public class GUI implements ActionListener{
            String filePath = file.getAbsolutePath();
            Path path = Paths.get(filePath);
            MultipartFile result = createMPF(filePath, path);
-           String design = "design1.pptx";
+           String design = "design7.pptx";
            
            	try {
         	   PdfToPowerPointConverter.convert(result, design);
