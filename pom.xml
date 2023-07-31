@@ -115,7 +115,7 @@
 					<archive>
 						<manifest>
 							<!-- Specify the main class for your Spring Boot application -->
-							<mainClass>com.example.research2slidesweb.Research2SlidesWebApplication</mainClass>
+							<mainClass>com.example.research2slidesweb.GUI</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
