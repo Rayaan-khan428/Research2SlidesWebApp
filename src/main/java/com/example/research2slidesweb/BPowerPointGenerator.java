@@ -102,6 +102,7 @@ public class BPowerPointGenerator {
 
         //----------------------NEW GUI CHANGES----------------------
         String directoryGUI = SaveDestinationGUI.getDestination();
+        System.out.println("Directory: "+directoryGUI);
         if(directoryGUI != null) {
             out = new FileOutputStream(directoryGUI + "/" + file);
         }

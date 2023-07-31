@@ -53,8 +53,9 @@ public class GUI implements ActionListener{
     Border borderBodyLower = BorderFactory.createEmptyBorder(70, 10, 10, 10);
     
     Color lightGray = Color.decode("#F2F2F2");
-    Color buttonColor = Color.decode("#20C997");
-    Color textColor = Color.WHITE;
+    Color buttonColor = Color.GREEN;
+	//Color buttonColor = Color.decode("#20C997");
+    Color textColor = Color.BLACK;
     
     public GUI() {
     	fc.addChoosableFileFilter(new FileNameExtensionFilter("PDF Documents", "pdf"));

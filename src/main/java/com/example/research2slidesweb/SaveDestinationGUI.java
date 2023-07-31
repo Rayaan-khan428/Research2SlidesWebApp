@@ -5,6 +5,7 @@ public class SaveDestinationGUI {
 
     public static void setDestination(String directoryline) {
         directory = directoryline;
+        System.out.println(directory);
     }
 
     public static String getDestination() {
