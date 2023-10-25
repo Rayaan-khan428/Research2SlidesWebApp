@@ -1,16 +1,17 @@
 package com.example.research2slidesweb;
 
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 @RestController // indicates the class is a Spring MVC controller that handles HTTP requests/responses
 @RequestMapping("/api") // all requests with this in the url will map to this controller
+@CrossOrigin(origins = "http://localhost:3000")
 public class Controller {
 
     /**
