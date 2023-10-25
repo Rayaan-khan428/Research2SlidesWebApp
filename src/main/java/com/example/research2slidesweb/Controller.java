@@ -25,13 +25,14 @@ public class Controller {
             @RequestParam("design") String design,
             @RequestBody MultipartFile pdfFile) {
 
+        final String finalDesign = design + ".pptx";  // Create a final variable here
+
         String taskId = UUID.randomUUID().toString();
 
         CompletableFuture<byte[]> future = CompletableFuture.supplyAsync(() -> {
             try {
                 System.out.println("request received successfully");
-                design += ".pptx";
-                return PdfToPowerPointConverter.convert(pdfFile, design);
+                return PdfToPowerPointConverter.convert(pdfFile, finalDesign);  // Use the final variable here
             } catch (IOException | InterruptedException | URISyntaxException e) {
                 throw new RuntimeException(e);
             }
