@@ -23,6 +23,7 @@ public class Controller {
      * @param pdfFile - the pdf that will be converted
      * @return - a byte array which is the PowerPoint
      */
+    @CrossOrigin(origins = "https://research2-slides-front-pb1jbmyl5-rayaan-khan428.vercel.app/")
     @PostMapping("/convert")
     public ResponseEntity<byte[]> convertPdfToPowerPoint(
 
