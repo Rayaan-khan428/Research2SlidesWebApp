@@ -69,76 +69,76 @@ public class TextSummarizer {
      */
     private static String summarizeText(String text) {
 
-//        return "this is a test";
+        return "this is a test";
 
-        String preSummarization = text.replaceAll(REGEX_PAGE_NUMBER, "")
-                .replaceAll("\\s+", " ").trim()
-                .replaceAll(REGEX_QUOTATIONS, "\\\\\"");
-
-        if (preSummarization.length() < 250) {
-            System.out.println("Paragraph has less than 250 characters, summarization not run to save tokens");
-            logger.info("Paragraph has less than 250 characters, summarization not run to save tokens");
-            return preSummarization;
-        } else {
-            try {
-                AsyncHttpClient client = new DefaultAsyncHttpClient();
-                String requestBody = String.format("{\"text\":\"%s\", \"length\":\"short\", \"format\":\"bullets\", \"model\":\"summarize-xlarge\"}", preSummarization);
-                Request request = client.prepare("POST", "https://api.cohere.ai/v1/summarize")
-                        .setHeader("accept", "application/json")
-                        .setHeader("content-type", "application/json")
-                        .setHeader("authorization", "Bearer " + API_KEY)
-                        .setBody(requestBody)
-                        .build();
-
-                Response response = client.executeRequest(request).get();
-                JsonObject jsonObject = new Gson().fromJson(response.getResponseBody(), JsonObject.class);
-
-                if (jsonObject.has("summary") && !jsonObject.get("summary").isJsonNull()) {
-                    String summary = jsonObject.get("summary").getAsString();
-                    return summary.replaceAll("-", "");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
+//        String preSummarization = text.replaceAll(REGEX_PAGE_NUMBER, "")
+//                .replaceAll("\\s+", " ").trim()
+//                .replaceAll(REGEX_QUOTATIONS, "\\\\\"");
+//
+//        if (preSummarization.length() < 250) {
+//            System.out.println("Paragraph has less than 250 characters, summarization not run to save tokens");
+//            logger.info("Paragraph has less than 250 characters, summarization not run to save tokens");
+//            return preSummarization;
+//        } else {
+//            try {
+//                AsyncHttpClient client = new DefaultAsyncHttpClient();
+//                String requestBody = String.format("{\"text\":\"%s\", \"length\":\"short\", \"format\":\"bullets\", \"model\":\"summarize-xlarge\"}", preSummarization);
+//                Request request = client.prepare("POST", "https://api.cohere.ai/v1/summarize")
+//                        .setHeader("accept", "application/json")
+//                        .setHeader("content-type", "application/json")
+//                        .setHeader("authorization", "Bearer " + API_KEY)
+//                        .setBody(requestBody)
+//                        .build();
+//
+//                Response response = client.executeRequest(request).get();
+//                JsonObject jsonObject = new Gson().fromJson(response.getResponseBody(), JsonObject.class);
+//
+//                if (jsonObject.has("summary") && !jsonObject.get("summary").isJsonNull()) {
+//                    String summary = jsonObject.get("summary").getAsString();
+//                    return summary.replaceAll("-", "");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return null;
     }
 
     private static String genTitle(String text) {
 
-//        return "this is a testing title";
+        return "this is a testing title";
 
-        String preSummarization = text.replaceAll(REGEX_PAGE_NUMBER, "")
-                .replaceAll("\\s+", " ").trim()
-                .replaceAll(REGEX_QUOTATIONS, "\\\\\"");
-
-        String prompt = "Provide a key phrase key it short: \n\n" + preSummarization;
-        String escapedPrompt = StringEscapeUtils.escapeJson(prompt);
-
-        try {
-            AsyncHttpClient client = new DefaultAsyncHttpClient();
-            String requestBody = String.format("{\"text\":\"%s\", \"additional_Command\":\"A very short title for the paragraph no more than 4 words\", \"model\":\"summarize-xlarge\"}", escapedPrompt);
-            Request request = client.prepare("POST", "https://api.cohere.ai/v1/summarize")
-                    .setHeader("accept", "application/json")
-                    .setHeader("content-type", "application/json")
-                    .setHeader("authorization", "Bearer " + API_KEY)
-                    .setBody(requestBody)
-                    .build();
-
-            Response response = client.executeRequest(request).get();
-            JsonObject jsonObject = new Gson().fromJson(response.getResponseBody(), JsonObject.class);
-
-            System.out.println(response.getResponseBody());
-
-            if (jsonObject.has("summary") && !jsonObject.get("summary").isJsonNull()) {
-                String summary = jsonObject.get("summary").getAsString();
-                return summary.replaceAll("-", "");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+//        String preSummarization = text.replaceAll(REGEX_PAGE_NUMBER, "")
+//                .replaceAll("\\s+", " ").trim()
+//                .replaceAll(REGEX_QUOTATIONS, "\\\\\"");
+//
+//        String prompt = "Provide a key phrase key it short: \n\n" + preSummarization;
+//        String escapedPrompt = StringEscapeUtils.escapeJson(prompt);
+//
+//        try {
+//            AsyncHttpClient client = new DefaultAsyncHttpClient();
+//            String requestBody = String.format("{\"text\":\"%s\", \"additional_Command\":\"A very short title for the paragraph no more than 4 words\", \"model\":\"summarize-xlarge\"}", escapedPrompt);
+//            Request request = client.prepare("POST", "https://api.cohere.ai/v1/summarize")
+//                    .setHeader("accept", "application/json")
+//                    .setHeader("content-type", "application/json")
+//                    .setHeader("authorization", "Bearer " + API_KEY)
+//                    .setBody(requestBody)
+//                    .build();
+//
+//            Response response = client.executeRequest(request).get();
+//            JsonObject jsonObject = new Gson().fromJson(response.getResponseBody(), JsonObject.class);
+//
+//            System.out.println(response.getResponseBody());
+//
+//            if (jsonObject.has("summary") && !jsonObject.get("summary").isJsonNull()) {
+//                String summary = jsonObject.get("summary").getAsString();
+//                return summary.replaceAll("-", "");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return null;
     }
 
 
