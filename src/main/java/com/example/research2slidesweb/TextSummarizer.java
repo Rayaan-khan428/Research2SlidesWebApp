@@ -68,6 +68,9 @@ public class TextSummarizer {
      * @return
      */
     private static String summarizeText(String text) {
+
+        return "this is a test";
+
         String preSummarization = text.replaceAll(REGEX_PAGE_NUMBER, "")
                 .replaceAll("\\s+", " ").trim()
                 .replaceAll(REGEX_QUOTATIONS, "\\\\\"");
@@ -102,6 +105,9 @@ public class TextSummarizer {
     }
 
     private static String genTitle(String text) {
+
+        return "this is a test title";
+
         String preSummarization = text.replaceAll(REGEX_PAGE_NUMBER, "")
                 .replaceAll("\\s+", " ").trim()
                 .replaceAll(REGEX_QUOTATIONS, "\\\\\"");
@@ -152,9 +158,10 @@ public class TextSummarizer {
         System.out.println("Summarized Paragraph");
         System.out.println("_________________________________________________");
 
-        logger.info("_________________________________________________");
-        logger.info("Summarized Paragraph");
-        logger.info("_________________________________________________");
+//        logger.info("\n_________________________________________________");
+//        logger.info("\nSummarized Paragraph");
+//        logger.info("\n_________________________________________________");
+
 //        System.out.println("Summary: " + summary);
 //        System.out.println("\nPercentage of PDF summarized: " + percentage + "%");
 //        System.out.println(currentIndex + " paragraphs out of " + totalSlides + "\n");
