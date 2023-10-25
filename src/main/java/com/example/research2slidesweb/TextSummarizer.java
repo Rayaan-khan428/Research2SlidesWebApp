@@ -69,7 +69,7 @@ public class TextSummarizer {
      */
     private static String summarizeText(String text) {
 
-        return "this is a test";
+//        return "this is a test";
 
         String preSummarization = text.replaceAll(REGEX_PAGE_NUMBER, "")
                 .replaceAll("\\s+", " ").trim()
@@ -106,7 +106,7 @@ public class TextSummarizer {
 
     private static String genTitle(String text) {
 
-        return "this is a testing title";
+//        return "this is a testing title";
 
         String preSummarization = text.replaceAll(REGEX_PAGE_NUMBER, "")
                 .replaceAll("\\s+", " ").trim()
