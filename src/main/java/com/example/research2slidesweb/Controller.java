@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = {"http://localhost:3000", "https://research2-slides-front-pb1jbmyl5-rayaan-khan428.vercel.app/"})
+@CrossOrigin(origins = {"http://localhost:3000", "https://research2-slides-front-hzrij46gj-rayaan-khan428.vercel.app"})
 public class Controller {
 
     private ConcurrentMap<String, CompletableFuture<byte[]>> pendingTasks = new ConcurrentHashMap<>();
