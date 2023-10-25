@@ -8,53 +8,75 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
-@RestController // indicates the class is a Spring MVC controller that handles HTTP requests/responses
-@RequestMapping("/api") // all requests with this in the url will map to this controller
-@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = {"http://localhost:3000", "https://research2-slides-front-pb1jbmyl5-rayaan-khan428.vercel.app/"})
 public class Controller {
 
-    /**
-     * this method takes the information sent from the front end, runs it through the methods that will convert the pdf
-     * to a PowerPoint and returns a PowerPoint that is ready for download
-     *
-     * @PostMapping - any api requests made will be run through this method
-     * @param design - a string indicating which design
-     * @param pdfFile - the pdf that will be converted
-     * @return - a byte array which is the PowerPoint
-     */
-    @CrossOrigin(origins = "https://research2-slides-front-pb1jbmyl5-rayaan-khan428.vercel.app/")
+    private ConcurrentMap<String, CompletableFuture<byte[]>> pendingTasks = new ConcurrentHashMap<>();
+
     @PostMapping("/convert")
-    public ResponseEntity<byte[]> convertPdfToPowerPoint(
-
+    public ResponseEntity<String> convertPdfToPowerPoint(
             @RequestParam("design") String design,
-            @RequestBody MultipartFile pdfFile)
-    {
+            @RequestBody MultipartFile pdfFile) {
+
+        String taskId = UUID.randomUUID().toString();
+
+        CompletableFuture<byte[]> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                System.out.println("request received successfully");
+                design += ".pptx";
+                return PdfToPowerPointConverter.convert(pdfFile, design);
+            } catch (IOException | InterruptedException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        pendingTasks.put(taskId, future);
+
+        return ResponseEntity.ok(taskId);
+    }
+
+    @GetMapping("/convert/status/{taskId}")
+    public ResponseEntity<String> checkStatus(@PathVariable String taskId) {
+        if (!pendingTasks.containsKey(taskId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        CompletableFuture<byte[]> future = pendingTasks.get(taskId);
+        if (future.isDone()) {
+            return ResponseEntity.ok("Done");
+        } else {
+            return ResponseEntity.ok("Processing");
+        }
+    }
+
+    @GetMapping("/convert/result/{taskId}")
+    public ResponseEntity<byte[]> fetchResult(@PathVariable String taskId) {
+        if (!pendingTasks.containsKey(taskId)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        CompletableFuture<byte[]> future = pendingTasks.get(taskId);
+        if (!future.isDone()) {
+            return ResponseEntity.status(202).body("Still processing".getBytes());
+        }
+
         try {
+            byte[] convertedPresentation = future.get();
 
-            System.out.println("request received successfully");
-
-            design += ".pptx";
-
-            // Call the PdfToPowerPointConverter class to perform the conversion
-            byte[] convertedPresentation = PdfToPowerPointConverter.convert(pdfFile, design);
-
-            // Setting the response headers
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             headers.setContentDispositionFormData("attachment", "converted_presentation.pptx");
 
-            // Return the converted presentation as a ResponseEntity
             return ResponseEntity.ok().headers(headers).body(convertedPresentation);
-
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-
-            // Return an error response if conversion fails
+        } catch (Exception e) {
             return ResponseEntity.status(500).body(("Error occurred during conversion: " + e.getMessage().getBytes()).getBytes());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
         }
     }
 }
