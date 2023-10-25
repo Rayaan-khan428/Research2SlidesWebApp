@@ -10,11 +10,13 @@ import org.asynchttpclient.Response;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TextSummarizer {
 
     private static final String API_KEY = "q88H9vLvPMgp25ouFSDrRSb3vLL8zwRH9y3jXBXr";
-
+    private static final Logger logger = LoggerFactory.getLogger(TextExtraction.class);
     private static final String REGEX_PAGE_NUMBER = "\\*{3}(?:END|START) OF PAGE \\d+\\*{3}";
     private static final String REGEX_QUOTATIONS = "(?<!\\\\)\"";
 
@@ -72,6 +74,7 @@ public class TextSummarizer {
 
         if (preSummarization.length() < 250) {
             System.out.println("Paragraph has less than 250 characters, summarization not run to save tokens");
+            logger.info("Paragraph has less than 250 characters, summarization not run to save tokens");
             return preSummarization;
         } else {
             try {
@@ -148,6 +151,10 @@ public class TextSummarizer {
         System.out.println("_________________________________________________");
         System.out.println("Summarized Paragraph");
         System.out.println("_________________________________________________");
+
+        logger.info("_________________________________________________");
+        logger.info("Summarized Paragraph");
+        logger.info("_________________________________________________");
 //        System.out.println("Summary: " + summary);
 //        System.out.println("\nPercentage of PDF summarized: " + percentage + "%");
 //        System.out.println(currentIndex + " paragraphs out of " + totalSlides + "\n");

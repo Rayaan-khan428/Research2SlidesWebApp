@@ -24,7 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class TextExtraction extends PDFStreamEngine {
+
+    private static final Logger logger = LoggerFactory.getLogger(TextExtraction.class);
 
     private int imageNumber = 1; // used in naming img's extracted from pdf
     private int pageNum = 0;
@@ -65,6 +70,7 @@ public class TextExtraction extends PDFStreamEngine {
             for (PDPage page : document.getPages()) {
                 pageNum++;
                 System.out.println("Processing page: " + pageNum);
+                logger.info("Processing page: " + pageNum);
                 this.processPage(page);
             }
         } catch (IOException e) {
@@ -133,6 +139,8 @@ public class TextExtraction extends PDFStreamEngine {
         try (FileWriter fileWriter = new FileWriter(outputFile.toFile())) {
             fileWriter.write(json);
             System.out.println("JSON data has been written to 'parsedPDF.json' successfully.");
+            logger.info("JSON data has been written to 'parsedPDF.json' successfully.");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -214,6 +222,7 @@ public class TextExtraction extends PDFStreamEngine {
                 // you can change the name of the image here
                 ImageIO.write(bImage, "PNG", new File(outputFolder + "/image_" + imageNumber + ".png"));
                 System.out.println("Image saved.");
+                logger.info("Image saved.");
                 this.addItem(pageNum);
                 imageNumber++;
 
