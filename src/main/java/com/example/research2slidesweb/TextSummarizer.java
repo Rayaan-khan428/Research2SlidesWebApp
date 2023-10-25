@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class TextSummarizer {
 
-    private static final String API_KEY = "q88H9vLvPMgp25ouFSDrRSb3vLL8zwRH9y3jXBXr";
+    private static final String API_KEY = "NC0m9TxaxQF3LlafHAb14UvqVfijCtTpX1xACJnA";
     private static final Logger logger = LoggerFactory.getLogger(TextExtraction.class);
     private static final String REGEX_PAGE_NUMBER = "\\*{3}(?:END|START) OF PAGE \\d+\\*{3}";
     private static final String REGEX_QUOTATIONS = "(?<!\\\\)\"";
