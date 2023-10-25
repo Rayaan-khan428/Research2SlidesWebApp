@@ -162,7 +162,7 @@ public class TextSummarizer {
 //        logger.info("\nSummarized Paragraph");
 //        logger.info("\n_________________________________________________");
 
-//        System.out.println("Summary: " + summary);
+        System.out.println("Summary: " + summary);
 //        System.out.println("\nPercentage of PDF summarized: " + percentage + "%");
 //        System.out.println(currentIndex + " paragraphs out of " + totalSlides + "\n");
     }
